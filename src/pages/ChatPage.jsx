@@ -13,6 +13,7 @@ import {
 } from "../api/InstaApi";
 import { io } from "socket.io-client";
 import { baseURL, INSTA_PAGE_ID } from "../config";
+import { ToastContainer, toast } from "react-toastify";
 const socket = io(baseURL, { transports: ["websocket"] });
 export function ChatPage() {
   const [conversations, setConversations] = useState([]);
@@ -65,18 +66,22 @@ export function ChatPage() {
   useEffect(() => {
     const loadMessages = async () => {
       if (!selected?.conversationId) return;
-
-      const { messages: fetchedMessages, paging } = await fetchMessages(
-        selected.conversationId
-      );
-      console.log("Fetched messages:", fetchedMessages);
-      setMessages(
-        fetchedMessages
-          .reverse()
-          .sort((a, b) => new Date(a.created_time) - new Date(b.created_time))
-      );
-      setPaging(paging);
-      setHasMoreMessages(!!paging?.next);
+      try {
+        const { messages: fetchedMessages, paging } = await fetchMessages(
+          selected.conversationId
+        );
+        console.log("Fetched messages:", fetchedMessages);
+        setMessages(
+          fetchedMessages
+            .reverse()
+            .sort((a, b) => new Date(a.created_time) - new Date(b.created_time))
+        );
+        setPaging(paging);
+        setHasMoreMessages(!!paging?.next);
+      } catch (err) {
+        console.log("Failed to load messages",err);
+        toast.error("Failed toload messages");
+      }
     };
 
     loadMessages();
@@ -108,39 +113,12 @@ export function ChatPage() {
         await loadConversations();
       } catch (err) {
         console.error("Failed to refresh messages:", err);
+        toast.error("Failed to load messages");
       }
     });
 
     // message reaction
-    socket.on("message_reaction", (reactions) => {
-      reactions.forEach(({ messageId, reaction: emoji, senderId, action }) => {
-        setMessages((prev) =>
-          prev.map((msg) => {
-            if (msg.id === messageId) {
-              let existing = msg.reactions || [];
-
-              if (action === "react") {
-                // add reaction if not already present
-                const alreadyReacted = existing.some(
-                  (r) => r.senderId === senderId && r.emoji === emoji
-                );
-                if (!alreadyReacted) {
-                  existing = [...existing, { senderId, emoji }];
-                }
-              } else if (action === "unreact") {
-                // remove reaction
-                existing = existing.filter(
-                  (r) => !(r.senderId === senderId && r.emoji === emoji)
-                );
-              }
-
-              return { ...msg, reactions: existing };
-            }
-            return msg;
-          })
-        );
-      });
-    });
+    socket.on("message_reaction", (reactions) => {});
 
     socket.onAny((ev, ...args) => console.log("Event:", ev, args));
 
@@ -195,6 +173,7 @@ export function ChatPage() {
       console.log("Message sent successfully. Response:", response);
     } catch (err) {
       console.error("Send failed:", err);
+      toast.error("Send Failed");
     }
   };
 
@@ -203,34 +182,35 @@ export function ChatPage() {
       setHasMoreMessages(false);
       return;
     }
+    try {
+      const afterCursor = new URL(paging.next).searchParams.get("after");
+      if (!afterCursor) {
+        setHasMoreMessages(false);
+        return;
+      }
 
-    const afterCursor = new URL(paging.next).searchParams.get("after");
-    if (!afterCursor) {
-      setHasMoreMessages(false);
-      return;
-    }
+      const { messages: olderMessages, paging: newPaging } =
+        await fetchMessages(selected.conversationId, afterCursor);
 
-    const { messages: olderMessages, paging: newPaging } = await fetchMessages(
-      selected.conversationId,
-      afterCursor
-    );
+      setMessages((prev) => {
+        const combined = [...olderMessages, ...prev];
+        const uniqueMap = new Map();
+        combined.forEach((msg) => {
+          uniqueMap.set(msg.id, { ...msg, status: msg.status || "sent" });
+        });
 
-    setMessages((prev) => {
-      const combined = [...olderMessages, ...prev];
-      const uniqueMap = new Map();
-      combined.forEach((msg) => {
-        uniqueMap.set(msg.id, { ...msg, status: msg.status || "sent" });
+        return [...uniqueMap.values()].sort(
+          (a, b) => new Date(a.created_time) - new Date(b.created_time)
+        );
       });
 
-      return [...uniqueMap.values()].sort(
-        (a, b) => new Date(a.created_time) - new Date(b.created_time)
-      );
-    });
-
-    setPaging(newPaging);
-    setHasMoreMessages(!!newPaging?.next);
+      setPaging(newPaging);
+      setHasMoreMessages(!!newPaging?.next);
+    } catch (err) {
+      console.log("Failed to load old messages",err);
+      toast.error("Failed to load old messages");
+    }
   };
-
 
   return (
     <div className="h-screen flex flex-col">
@@ -259,6 +239,7 @@ export function ChatPage() {
           <ChatInput onSend={handleSendMessage} disabled={!selected} />
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
