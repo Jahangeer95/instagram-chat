@@ -79,15 +79,19 @@ export function ChatInput({ onSend, disabled }) {
         {/* for emoji */}
         <label
           htmlFor="text"
-          className="cursor-pointer p-2 rounded hover:bg-gray-400 text-gray-800 bg-gray-200"
-          onClick={() => setEmoji((prev) => !prev)}
+          className={`cursor-pointer p-2 rounded hover:bg-gray-400 text-gray-800 bg-gray-200 ${disabled ? "opacity-50 cursor-not-allowed": ""}`}
+          onClick={() => {
+            if (!disabled) {
+              setEmoji((prev) => !prev);
+            }
+          }}
         >
           <FontAwesomeIcon icon={faSmile} />
         </label>
         {/* icon for file input */}
         <label
           htmlFor="fileInput"
-          className="cursor-pointer p-2 rounded hover:bg-gray-400 text-gray-800 bg-gray-200"
+          className={`cursor-pointer p-2 rounded hover:bg-gray-400 text-gray-800 bg-gray-200 ${disabled ? "opacity-50 cursor-not-allowed": ""}`}
         >
           <FontAwesomeIcon icon={faPaperclip} />
         </label>
@@ -114,7 +118,7 @@ export function ChatInput({ onSend, disabled }) {
         <button
           onClick={handleSend}
           disabled={disabled || (!text && !file)}
-          className="px-4 py-2  bg-red-400 text-white rounded hover:bg-orange-400 disabled:opacity-50"
+          className="px-4 py-2  bg-red-400 text-white rounded hover:bg-orange-400 disabled:opacity-50 disabled: cursor-not-allowed"
         >
           Send
         </button>
