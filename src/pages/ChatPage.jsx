@@ -232,8 +232,8 @@ export function ChatPage() {
               hasMore={hasMoreMessages}
             />
           ) : (
-            <div className="flex flex-1 m-auto pt-60 ">
-              Select a user to view messages
+            <div className="flex flex-1 m-auto pt-60 text-black ">
+              Select a user to start conversation
             </div>
           )}
           <ChatInput onSend={handleSendMessage} disabled={!selected} />
