@@ -37,6 +37,7 @@ export function ChatPage() {
       return {
         conversationId: conv.conversationId || conv.id,
         participants: conv.participants,
+        updatedTime: conv.updatedTime,
       };
     });
 
@@ -47,7 +48,9 @@ export function ChatPage() {
         map.set(item.conversationId, item);
       });
 
-      return Array.from(map.values());
+      return Array.from(map.values()).sort(
+        (a, b) => new Date(b.updatedTime) - new Date(a.updatedTime)
+      );
     });
 
     if (paging?.next) {
@@ -79,7 +82,7 @@ export function ChatPage() {
         setPaging(paging);
         setHasMoreMessages(!!paging?.next);
       } catch (err) {
-        console.log("Failed to load messages",err);
+        console.log("Failed to load messages", err);
         toast.error("Failed toload messages");
       }
     };
@@ -207,7 +210,7 @@ export function ChatPage() {
       setPaging(newPaging);
       setHasMoreMessages(!!newPaging?.next);
     } catch (err) {
-      console.log("Failed to load old messages",err);
+      console.log("Failed to load old messages", err);
       toast.error("Failed to load old messages");
     }
   };
