@@ -51,7 +51,7 @@ When you add your Instagram page to the app, the following permissions are enabl
     3. Once accepted, you can send and receive messages with their Instagram Scoped User ID (IGSID).
 
 
-## Policies: 24‑Hour Window 
+## 24‑Hour Window Policy
  You can respond with promotional/non‑promotional content **within 24 hours** of the user’s last message.
 
 
