@@ -34,21 +34,21 @@ Make sure your Instagram Professional account is **connected** to your Facebook 
      2. Use this **Page Access Token** for `/messages` send API.
 
 
-5. **Permissions **
+5. **Permissions**
 When you add your Instagram page to the app, the following permissions are enabled automatically:
-  1. `instagram_manage_messages`
-  2. `pages_manage_metadata` 
-  3. `instagram_basic`
+    1. `instagram_manage_messages`
+    2. `pages_manage_metadata` 
+    3. `instagram_basic`
 
 6. **Webhooks**
-  1. In Instagram Settings, scroll down to Webhooks.
-  2. Add your Callback URL and Verify Token.
-  3. Subscribe to `messages`, `messages_seen` , `messages_reaction`.
+    1. In Instagram Settings, scroll down to Webhooks.
+    2. Add your Callback URL and Verify Token.
+    3. Subscribe to `messages`, `messages_seen` , `messages_reaction`.
 
 7. **App Roles**
- 1. In App Roles, add a tester by entering their Facebook ID.
- 2. The tester must accept the invite in their App Dashboard https://developers.facebook.com/apps/ .
- 3. Once accepted, you can send and receive messages with their Instagram Scoped User ID (IGSID).
+    1. In App Roles, add a tester by entering their Facebook ID.
+    2. The tester must accept the invite in their App Dashboard https://developers.facebook.com/apps/ .
+    3. Once accepted, you can send and receive messages with their Instagram Scoped User ID (IGSID).
 
 
 ## Policies: 24‑Hour Window 
