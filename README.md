@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Instagram Messaging API via Messenger App 
+## Prerequisites
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. **Instagram Professional** account (Business or Creator).
+2. **Facebook Page** that will be linked to the Instagram account.
+3. **Meta Developer Account** and a **Messenger App** (App type should be *Business*).
 
-## Available Scripts
+### Enable Access to Messages
+In the Instagram app settings:
+1. Open Messages and Story Replies.
+2. Open Message Requests and enable **Allow access to messages**.
 
-In the project directory, you can run:
+## Step‑by‑Step: Meta Dashboard
 
-### `npm start`
+1. **Create / Open your App**
+  1. Go to Meta for Developers https://developers.facebook.com/
+  2. Click **Create App**
+  3. Enter the app name
+  4. Select other and click next
+  5. Choose **Business** 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **Add Products**
+      1. In your app, click **Add products**
+      2. Select **Messenger**.
+      3. Inside **Messenger**, open **Instagram Settings**.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. **Add Instagram account to the App**
+Make sure your Instagram Professional account is **connected** to your Facebook Page
+     1. In Instagram Settings, click **Add or remove Instagram Pages**.
+     3. Log in and select your Facebook Page and Instagram account.
 
-### `npm test`
+4. **Generate Page Access Token**
+     1. In Instagram Settings, click **Generate Token** and save the token.
+     2. Use this **Page Access Token** for `/messages` send API.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+5. **Permissions **
+When you add your Instagram page to the app, the following permissions are enabled automatically:
+  1. `instagram_manage_messages`
+  2. `pages_manage_metadata` 
+  3. `instagram_basic`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+6. **Webhooks**
+  1. In Instagram Settings, scroll down to Webhooks.
+  2. Add your Callback URL and Verify Token.
+  3. Subscribe to `messages`, `messages_seen` , `messages_reaction`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+7. **App Roles**
+ 1. In App Roles, add a tester by entering their Facebook ID.
+ 2. The tester must accept the invite in their App Dashboard https://developers.facebook.com/apps/ .
+ 3. Once accepted, you can send and receive messages with their Instagram Scoped User ID (IGSID).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Policies: 24‑Hour Window 
+ You can respond with promotional/non‑promotional content **within 24 hours** of the user’s last message.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+You can now receive DMs via webhooks and reply through the Graph API.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
