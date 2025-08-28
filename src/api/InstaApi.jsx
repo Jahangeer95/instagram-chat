@@ -48,21 +48,22 @@ export const fetchMessages = async (conversationId, afterCursor = "") => {
     const responseData = await res.json();
 
     if (!responseData.success || !responseData.data) {
-      return { messages: [], paging: null };
+      return { messages: [], paging: null,instaUser:null };
     }
 
-    const { messages = [], paging = null } = responseData.data;
+    const { messages = [], paging = null,instaUser=null } = responseData.data;
 
     console.log("Fetched messages:", {
       messages,
       paging,
+      instaUser,
       type: typeof messages,
     });
 
-    return { messages, paging };
+    return { messages, paging,instaUser };
   } catch (error) {
     console.error("Error fetching messages:", error);
-    return { messages: [], paging: null };
+    return { messages: [], paging: null ,instaUser:null};
   }
 };
 

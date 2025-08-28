@@ -1,4 +1,4 @@
-export const baseURL = "https://2478fa2057ef.ngrok-free.app";
+export const baseURL = "https://backend-whatsapp-chat-production.up.railway.app";
 export const FB_PAGE_ID = "750201798171865";
 export const INSTAGRAM_ACCESS_TOKEN="EAAH6cPpiKYUBPGZCZBNk9zzL9RdSe2ZA5uqy2vX2ZBsSIVLbB9vKW0nxKEg8eP4kZCUFP0f7ocPZBZChCLw9ZA3BPYrkIKKU0N8UZC8KZBMMtd0xDIW76tWgyq5TBarsvBr2RHIAQffNOxgvq8nOcxLwmsp7Bj2lBsRuFu23c1NihxkKk3bwn2DIGTHQZCinKTYW1SqaMflZBJdcAgZDZD";
 export const INSTA_PAGE_ID="17841476814343388"

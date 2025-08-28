@@ -70,10 +70,13 @@ export function ChatPage() {
     const loadMessages = async () => {
       if (!selected?.conversationId) return;
       try {
-        const { messages: fetchedMessages, paging } = await fetchMessages(
+        const { messages: fetchedMessages, paging,instaUser } = await fetchMessages(
           selected.conversationId
         );
         console.log("Fetched messages:", fetchedMessages);
+        setSelected((prev)=>({
+          ...prev,instaUser
+        }));
         setMessages(
           fetchedMessages
             .reverse()
@@ -145,7 +148,14 @@ export function ChatPage() {
       console.warn("No recipient found in selected conversation:", selected);
       return;
     }
+    // const lastMessageTime = selected?.instaUser?.last_message_time;
+    // const now = Date.now();
+    // const diffHours = (now - Number(lastMessageTime)) / (1000 * 60 * 60);
 
+    // if (diffHours > 24) {
+    //   toast.error("Cannot send: 24-hour window expired");
+    //   return;
+    // }
     const tempId = Date.now().toString();
 
     const newMsg = {
