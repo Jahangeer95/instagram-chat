@@ -148,6 +148,7 @@ export function ChatPage() {
       console.warn("No recipient found in selected conversation:", selected);
       return;
     }
+    // 24 hours messaging window check
     // const lastMessageTime = selected?.instaUser?.last_message_time;
     // const now = Date.now();
     // const diffHours = (now - Number(lastMessageTime)) / (1000 * 60 * 60);
