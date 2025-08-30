@@ -23,6 +23,7 @@ export function ChatPage() {
   const [hasMore, setHasMore] = useState(true);
   const [afterCursor, setAfterCursor] = useState("");
   const [hasMoreMessages, setHasMoreMessages] = useState(true);
+  const[instaUser,setInstaUser]=useState(null);
 
   const selectedRef = useRef(null);
   useEffect(() => {
@@ -74,9 +75,11 @@ export function ChatPage() {
           selected.conversationId
         );
         console.log("Fetched messages:", fetchedMessages);
-        setSelected((prev)=>({
-          ...prev,instaUser
-        }));
+        // setSelected((prev)=>({
+        //   ...prev,instaUser
+        // }));
+        setInstaUser(instaUser);
+        console.log("InstaUser:",instaUser);
         setMessages(
           fetchedMessages
             .reverse()
@@ -149,7 +152,7 @@ export function ChatPage() {
       return;
     }
     // 24 hours messaging window check
-    // const lastMessageTime = selected?.instaUser?.last_message_time;
+    // const lastMessageTime = instaUser?.last_message_time;
     // const now = Date.now();
     // const diffHours = (now - Number(lastMessageTime)) / (1000 * 60 * 60);
 
